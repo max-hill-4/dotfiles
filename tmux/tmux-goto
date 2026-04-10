@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Switch to the Nth tmux session by position (1-indexed)
+# Usage: tmux-goto 3          →  switch to 3rd session
+#        tmux-goto 2 --create →  switch to 2nd, or create next if missing
+
+position=$1
+create=$2
+
+target=$(tmux list-sessions -F '#{session_name}' | sed -n "${position}p")
+
+if [ -n "$target" ]; then
+    tmux switch-client -t "$target"
+elif [ "$create" = "--create" ]; then
+    # Create the next session (appended, so it lands at position N+1)
+    session_count=$(tmux list-sessions 2>/dev/null | wc -l)
+    new_name="session-$((session_count + 1))"
+    tmux new-session -d -s "$new_name" -c "#{pane_current_path}"
+    tmux switch-client -t "$new_name"
+fi

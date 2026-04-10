@@ -1,0 +1,17 @@
+#!/bin/bash
+# Install tmux config by symlinking to this repo
+
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Symlink config
+ln -sf "$SCRIPT_DIR/tmux.conf" ~/.tmux.conf
+
+# Symlink scripts to ~/.local/bin/
+mkdir -p ~/.local/bin
+ln -sf "$SCRIPT_DIR/tmux-goto" ~/.local/bin/tmux-goto
+ln -sf "$SCRIPT_DIR/tmux-goto-window" ~/.local/bin/tmux-goto-window
+ln -sf "$SCRIPT_DIR/tmux-goto-pane" ~/.local/bin/tmux-goto-pane
+
+echo "Tmux config installed. Run 'tmux source-file ~/.tmux.conf' to apply."

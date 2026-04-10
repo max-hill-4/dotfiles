@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Switch to the Nth pane (1-indexed), or split to create it if missing
+# Usage: tmux-goto-pane 3
+
+position=$1
+pane_count=$(tmux list-panes | wc -l)
+
+if [ "$position" -le "$pane_count" ]; then
+    tmux select-pane -t "$position"
+else
+    # Alternate between horizontal and vertical splits
+    splits_needed=$((position - pane_count))
+    for ((i = 0; i < splits_needed; i++)); do
+        if [ $((pane_count % 2)) -eq 0 ]; then
+            tmux split-window -h -c "#{pane_current_path}"
+        else
+            tmux split-window -v -c "#{pane_current_path}"
+        fi
+        pane_count=$((pane_count + 1))
+    done
+    tmux select-pane -t "$position"
+fi
