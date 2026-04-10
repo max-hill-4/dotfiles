@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Display all tmux sessions, highlighting the active one
+# Output format:  0  session-2*  session-3
+
+current=$(tmux display-message -p '#S')
+tmux list-sessions -F '#{session_name}' 2>/dev/null | while read -r name; do
+    if [ "$name" = "$current" ]; then
+        echo "#[fg=#1a1b26,bg=#7aa2f7,bold] $name #[default]"
+    else
+        echo "#[fg=#a9b1d6] $name #[default]"
+    fi
+done | tr -d '\n'

@@ -13,6 +13,7 @@ mkdir -p ~/.local/bin
 ln -sf "$SCRIPT_DIR/tmux-goto" ~/.local/bin/tmux-goto
 ln -sf "$SCRIPT_DIR/tmux-goto-window" ~/.local/bin/tmux-goto-window
 ln -sf "$SCRIPT_DIR/tmux-goto-pane" ~/.local/bin/tmux-goto-pane
+ln -sf "$SCRIPT_DIR/tmux-session-list" ~/.local/bin/tmux-session-list
 
 # Symlink plugins to ~/.tmux/plugins/
 mkdir -p ~/.tmux
