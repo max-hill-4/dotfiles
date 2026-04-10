@@ -14,4 +14,11 @@ ln -sf "$SCRIPT_DIR/tmux-goto" ~/.local/bin/tmux-goto
 ln -sf "$SCRIPT_DIR/tmux-goto-window" ~/.local/bin/tmux-goto-window
 ln -sf "$SCRIPT_DIR/tmux-goto-pane" ~/.local/bin/tmux-goto-pane
 
+# Symlink plugins to ~/.tmux/plugins/
+mkdir -p ~/.tmux
+ln -sf "$SCRIPT_DIR/plugins" ~/.tmux/plugins
+
+# Fix pyyaml import (system pyyaml uses 'import yaml', not 'from pyyaml.lib import yaml')
+sed -i 's/from pyyaml.lib import yaml/import yaml/' ~/.tmux/plugins/tmux-which-key/plugin/build.py 2>/dev/null || true
+
 echo "Tmux config installed. Run 'tmux source-file ~/.tmux.conf' to apply."
