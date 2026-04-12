@@ -16,4 +16,5 @@ elif [ "$create" = "--create" ]; then
     new_name="session-$((session_count + 1))"
     tmux new-session -d -s "$new_name" -c "#{pane_current_path}"
     tmux switch-client -t "$new_name"
+    # theme auto-applied by session-created hook
 fi

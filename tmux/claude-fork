@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# Fork current claude session into a new tmux split pane
+# Called by tmux binding: Ctrl+a Ctrl+f
+# Receives the source pane ID as $1 so we look up the right session
+# before creating the split (otherwise we'd query the new pane).
+
+set -euo pipefail
+
+source_pane="${1:?usage: claude-fork PANE_ID}"
+sessions_dir="$HOME/.claude/sessions"
+cwd="$(tmux display -pt "$source_pane" '#{pane_current_path}')"
+
+# Walk the process tree from the pane's shell to find a claude PID
+find_claude_pid() {
+  local pid="$1"
+  # Check this PID and all descendants for a session file
+  for p in "$pid" $(ps --ppid "$pid" -o pid= 2>/dev/null | head -20); do
+    if [ -f "$sessions_dir/$p.json" ]; then
+      echo "$p"
+      return 0
+    fi
+    # One more level (ollama -> claude -> node)
+    for gc in $(ps --ppid "$p" -o pid= 2>/dev/null | head -20); do
+      if [ -f "$sessions_dir/$gc.json" ]; then
+        echo "$gc"
+        return 0
+      fi
+    done
+  done
+  return 1
+}
+
+pane_pid=$(tmux display -pt "$source_pane" '#{pane_pid}')
+claude_pid=$(find_claude_pid "$pane_pid")
+
+if [ -n "$claude_pid" ] && [ -f "$sessions_dir/$claude_pid.json" ]; then
+  session_id=$(jq -r '.sessionId' "$sessions_dir/$claude_pid.json")
+  tmux split-window -h -c "$cwd" "ollama launch claude --model glm-5.1:cloud -- --resume $session_id --fork-session"
+else
+  # No running session in this pane — start fresh
+  tmux split-window -h -c "$cwd" "ollama launch claude --model glm-5.1:cloud"
+fi
