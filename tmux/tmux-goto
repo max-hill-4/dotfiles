@@ -13,7 +13,7 @@ if [ -n "$target" ]; then
 elif [ "$create" = "--create" ]; then
     # Create the next session, named by its position index (0-based)
     session_count=$(tmux list-sessions 2>/dev/null | wc -l)
-    new_name="$((session_count + 1))"
+    new_name="$session_count"
     tmux new-session -d -s "$new_name" -c "#{pane_current_path}"
     tmux switch-client -t "$new_name"
     # theme auto-applied by session-created hook
