@@ -4,6 +4,9 @@ fish_add_path ~/.local/bin
 # Claude alias for ollama
 alias claude='ollama launch claude --model glm-5.1:cloud'
 
+# tmux: attach to first session instead of creating a new one
+alias tmux='tmux attach -t 0 2>/dev/null || tmux new-session -s 0'
+
 # eza with file icons
 alias ls='eza --icons'
 alias ll='eza -l --icons --git'

@@ -11,9 +11,10 @@ target=$(tmux list-sessions -F '#{session_name}' | sed -n "${position}p")
 if [ -n "$target" ]; then
     tmux switch-client -t "$target"
 elif [ "$create" = "--create" ]; then
-    # Create the next session, named by its position index (0-based)
-    session_count=$(tmux list-sessions 2>/dev/null | wc -l)
-    new_name="$session_count"
-    tmux new-session -d -s "$new_name" -c "#{pane_current_path}"
+    # Get the current pane's path from the attached client
+    cwd=$(tmux display-message -p '#{pane_current_path}')
+    # Create the next session, named by its position index
+    new_name="$position"
+    tmux new-session -d -s "$new_name" -c "$cwd"
     tmux switch-client -t "$new_name"
 fi
