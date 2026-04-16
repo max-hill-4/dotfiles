@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sudo docker:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:overseerr.dev)",
+      "Skill(update-config)",
+      "Skill(update-config:*)",
+      "Bash(sudo chmod:*)",
+      "Bash(curl -s \"https://aphex.10ninety.co.uk/portalexports/RightmoveV3Xml/1000\")",
+      "Bash(curl -s --max-time 30 \"https://aphex.maxh.work/complaints-procedure/\")",
+      "Bash(python3 -c \"import sys; from html.parser import HTMLParser;:*)",
+      "Bash(curl -s --max-time 30 \"https://www.propertymark.co.uk/\")",
+      "Bash(curl -s --max-time 30 \"https://www.propertyredress.co.uk/\")",
+      "Bash(curl -s --max-time 30 \"https://www.propertyredress.co.uk/support/contact-us\")",
+      "Bash(curl -s --max-time 30 \"https://www.propertyredress.co.uk/consumers/make-a-complaint\")",
+      "Bash(curl -s --max-time 30 \"https://www.propertymark.co.uk/professional-standards/consumer-complaints-process.html\")",
+      "Bash(curl -s --max-time 30 \"https://www.propertyredress.co.uk/consumers\")",
+      "Bash(curl -s --max-time 30 \"https://www.propertyredress.co.uk/support\")",
+      "WebFetch(domain:docs.polymarket.com)"
+    ],
+    "defaultMode": "bypassPermissions"
+  },
+  "remote": {
+    "defaultEnvironmentId": "env_019BovTpJqDc9QWEK7SqDcnU"
+  }
+}
