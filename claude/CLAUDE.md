@@ -49,3 +49,32 @@ curl --upload-file /path/to/file https://upload.maxh.work/filename.ext
 # Pipe output as a named file
 some-command | curl --upload-file - https://upload.maxh.work/output.txt
 ```
+
+# Image Analysis (Zen MCP + Nemotron Nano VL)
+
+The Zen MCP server has a free vision model for analyzing images, charts, screenshots, and documents.
+
+**Model:** `nvidia/nemotron-nano-12b-v2-vl:free` (alias: `nemo-vl`)
+**Provider:** OpenRouter (free tier)
+**Capabilities:** Image, text, and video input; chart reading; OCR; document understanding
+
+**How to use:**
+- Use any `mcp__zen__*` tool with `model: "nemo-vl"` and pass image paths in the `images` parameter
+- Works with: `mcp__zen__chat`, `mcp__zen__thinkdeep`, `mcp__zen__analyze`, `mcp__zen__codereview`
+- Example: `mcp__zen__chat` with `model: "nemo-vl"`, `images: ["/path/to/image.png"]`, `prompt: "Describe this image"`
+
+**Other free Zen models (text only, no vision):**
+| Alias | Model | Context |
+|-------|-------|---------|
+| `bp` | big-pickle | 200K |
+| `mm-free` | minimax-m2.5-free | 1M |
+| `nemo-free` | nemotron-3-super-free | 128K |
+| `trinity` | trinity-large-preview-free | 128K |
+| `nano` | gpt-5-nano | 128K |
+
+**Config files:**
+- Custom models: `/home/eeg/.pal/custom_models.json`
+- OpenRouter models: `/home/eeg/.pal/openrouter_models.json`
+- MCP env vars: `/home/eeg/.claude.json` (mcpServers.zen)
+
+**Privacy:** The free Nemotron tier logs all prompts/outputs to NVIDIA. Don't send sensitive data.
