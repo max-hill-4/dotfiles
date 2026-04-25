@@ -10,7 +10,6 @@ alias tmux='command tmux attach -t 0 2>/dev/null; or command tmux new-session -s
 # auto-start tmux
 if status is-interactive
     and not set -q TMUX
-    and not set -q SSH_CLIENT
     exec tmux attach -t 0 2>/dev/null; or exec tmux new-session -s 0
 end
 
