@@ -15,15 +15,6 @@
     "skipDangerousModePermissionPrompt": true
   },
   "model": "sonnet[1m]",
-  "statusLine": {
-    "type": "command",
-    "command": "bash /home/eeg/.claude/statusline-command.sh"
-  },
-  "enabledPlugins": {
-    "frontend-design@claude-plugins-official": true
-  },
-  "voiceEnabled": true,
-  "skipDangerousModePermissionPrompt": true,
   "hooks": {
     "Notification": [
       {
@@ -36,5 +27,15 @@
         ]
       }
     ]
-  }
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash /home/eeg/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true
+  },
+  "effortLevel": "high",
+  "skipDangerousModePermissionPrompt": true,
+  "voiceEnabled": true
 }
