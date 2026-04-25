@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Switch to the Nth window (1-indexed), or create one more if missing
+# Usage: tmux-goto-window 3
+
+position=$1
+window_count=$(tmux list-windows | wc -l)
+
+if [ "$position" -le "$window_count" ]; then
+    tmux select-window -t "$position"
+else
+    tmux new-window -c "#{pane_current_path}"
+fi

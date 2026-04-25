@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Renumber tmux sessions sequentially (1, 2, 3, ...)
+# Uses temp names to avoid conflicts during rename.
+
+mapfile -t sessions < <(tmux list-sessions -F '#{session_name}' 2>/dev/null)
+
+# First pass: rename to temp names to avoid conflicts
+for i in "${!sessions[@]}"; do
+    new_num=$((i + 1))
+    old_name="${sessions[$i]}"
+    if [ "$old_name" != "$new_num" ]; then
+        tmux rename-session -t "$old_name" "_rn_${new_num}" 2>/dev/null
+    fi
+done
+
+# Second pass: rename from temp to final
+for i in "${!sessions[@]}"; do
+    new_num=$((i + 1))
+    old_name="${sessions[$i]}"
+    if [ "$old_name" != "$new_num" ]; then
+        tmux rename-session -t "_rn_${new_num}" "$new_num" 2>/dev/null
+    fi
+done

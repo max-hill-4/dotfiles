@@ -1,0 +1,20 @@
+#!/bin/bash
+# tmux-fzf-file: Fuzzy find files and open in nvim
+
+# Get current directory or use provided directory
+START_DIR="${1:-.}"
+
+# Use fd if available, otherwise find
+if command -v fd >/dev/null 2>&1; then
+    FILE=$(cd "$START_DIR" && fd --type f --hidden --exclude .git | ~/.fzf/bin/fzf --reverse --prompt='file> ' --preview 'cat {}' --preview-window=right:50%)
+else
+    FILE=$(cd "$START_DIR" && find . -type f -not -path '*/\.*' | sed 's|^\./||' | ~/.fzf/bin/fzf --reverse --prompt='file> ' --preview 'cat {}' --preview-window=right:50%)
+fi
+
+# If a file was selected, open it in nvim
+if [ -n "$FILE" ]; then
+    FULL_PATH="$(cd "$START_DIR" && realpath "$FILE" 2>/dev/null || echo "$START_DIR/$FILE")"
+    tmux send-keys -t "#{pane_id}" "Escape"
+    tmux send-keys -t "#{pane_id}" ":e $FULL_PATH"
+    tmux send-keys -t "#{pane_id}" "Enter"
+fi
