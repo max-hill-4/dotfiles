@@ -1,0 +1,19 @@
+#!/bin/bash
+# Install Claude Code config by symlinking to this repo
+
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Symlink config files
+mkdir -p ~/.claude
+ln -sf "$SCRIPT_DIR/settings.json" ~/.claude/settings.json
+ln -sf "$SCRIPT_DIR/CLAUDE.md" ~/.claude/CLAUDE.md
+ln -sf "$SCRIPT_DIR/statusline-command.sh" ~/.claude/statusline-command.sh
+chmod +x "$SCRIPT_DIR/statusline-command.sh"
+
+# Symlink project-specific memory (preserves existing memory files)
+mkdir -p ~/.claude/projects
+ln -sf "$SCRIPT_DIR/projects" ~/.claude/projects/dotfiles
+
+echo "Claude Code config installed. Restart Claude Code to apply."

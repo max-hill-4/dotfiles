@@ -17,9 +17,12 @@ This instance runs via Ollama Cloud, not Anthropic directly.
 - **Local API:** `http://localhost:11434/api/chat` (cloud offload is automatic when using `:cloud` models)
 - **SDK:** Python `ollama.Client(host="https://ollama.com", headers={"Authorization": "Bearer " + key})`; JS similar
 
-# Environment & File Handling
+# Environment & Hardware
 
-- Connected via SSH to an Oracle Cloud ARM VPS — no local browser or GUI
+- **Local machine:** WSL2 on Windows 11 desktop — RTX 5070, AMD 9800X3D, 64GB RAM
+- **Platform:** Linux 6.6.87.2-microsoft-standard-WSL2
+- WSL2 shares localhost with Windows — services on either side are accessible on `localhost`
+- Blender runs on the Windows side; MCP servers in WSL connect to it over localhost
 - When the user needs to view/download a file, upload it via the transfer.sh container and give them a URL
 
 ## Upload Container (transfer.sh)
