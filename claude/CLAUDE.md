@@ -23,9 +23,9 @@ This instance runs via Ollama Cloud, not Anthropic directly.
 - **Platform:** Linux 6.6.87.2-microsoft-standard-WSL2
 - WSL2 shares localhost with Windows — services on either side are accessible on `localhost`
 - Blender runs on the Windows side; MCP servers in WSL connect to it over localhost
-- When the user needs to view/download a file, copy it to their Windows Downloads directory:
-  `cp /path/to/file /mnt/c/Users/maxwe/Downloads/`
-  Then tell the user to check their Downloads folder.
+- When the user needs to view/download a file:
+  - **On WSL2 (local):** Copy to Windows Downloads — `cp /path/to/file /mnt/c/Users/maxwe/Downloads/` — then tell user to check Downloads
+  - **On Oracle VPS:** Upload via transfer.sh — `curl --upload-file /path/to/file https://upload.maxh.work/filename.ext` — then share the returned URL
 
 # Image Analysis (Zen MCP + Nemotron Nano VL)
 
