@@ -23,35 +23,9 @@ This instance runs via Ollama Cloud, not Anthropic directly.
 - **Platform:** Linux 6.6.87.2-microsoft-standard-WSL2
 - WSL2 shares localhost with Windows — services on either side are accessible on `localhost`
 - Blender runs on the Windows side; MCP servers in WSL connect to it over localhost
-- When the user needs to view/download a file, upload it via the transfer.sh container and give them a URL
-
-## Upload Container (transfer.sh)
-
-Used to share files that can't be easily displayed in a terminal (images, PDFs, spreadsheets, binaries, etc.).
-
-**How to upload a file:**
-```bash
-curl --upload-file /path/to/file https://upload.maxh.work/file.txt
-```
-This returns a URL like `https://upload.maxh.work/RANDOM_ID/file.txt` — share that with the user.
-
-**Details:**
-- **Image:** `dutchcoders/transfer.sh`
-- **Compose file:** `/home/eeg/upload/docker-compose.yml`
-- **Data volume:** `/home/eeg/upload/data/` (persisted on disk)
-- **Internal port:** 8080 → mapped to host 3012
-- **Public URL:** `https://upload.maxh.work` (proxied via Caddy with TLS)
-- **Max upload size:** 5 GB (set in Caddy)
-- **Requires `sudo`** for Docker commands (`sudo docker …`)
-
-**Quick patterns:**
-```bash
-# Single file
-curl --upload-file /path/to/file https://upload.maxh.work/filename.ext
-
-# Pipe output as a named file
-some-command | curl --upload-file - https://upload.maxh.work/output.txt
-```
+- When the user needs to view/download a file, copy it to their Windows Downloads directory:
+  `cp /path/to/file /mnt/c/Users/maxwe/Downloads/`
+  Then tell the user to check their Downloads folder.
 
 # Image Analysis (Zen MCP + Nemotron Nano VL)
 

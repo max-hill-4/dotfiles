@@ -2,7 +2,9 @@
 fish_add_path ~/.local/bin
 
 # Claude alias for ollama
-alias claude='ollama launch claude --model glm-5.1:cloud'
+alias cl='ollama launch claude --model glm-5.1:cloud'
+alias dl='ollama launch claude --model deepseek-v4-pro:cloud -- -s danger-full-access -a never'
+alias codex='ollama launch codex --model glm-5.1:cloud -- -s danger-full-access -a never'
 
 # tmux: attach to first session instead of creating a new one
 alias tmux='command tmux attach -t 0 2>/dev/null; or command tmux new-session -s 0'
@@ -23,4 +25,7 @@ alias ltt='eza --tree --icons'
 if status is-interactive
     # Accept autosuggestion on Enter instead of needing Right-arrow first
     bind \r accept-autosuggestion execute
+end
+function copy
+    cat $argv | clip.exe
 end
